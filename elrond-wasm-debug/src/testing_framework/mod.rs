@@ -5,7 +5,7 @@ mod mandos_generator;
 mod raw_converter;
 mod tx_mandos;
 
-use address_factory::*;
+pub use address_factory::*;
 pub use contract_obj_wrapper::*;
 pub use helper_macros::*;
 use mandos_generator::*;
