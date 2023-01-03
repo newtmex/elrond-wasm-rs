@@ -1,9 +1,9 @@
 #![no_std]
 
-elrond_wasm::imports!();
+mx_sc::imports!();
 
 /// Test contract for investigating async calls.
-#[elrond_wasm::contract]
+#[mx_sc::contract]
 pub trait RecursiveCaller {
     #[proxy]
     fn vault_proxy(&self) -> vault::Proxy<Self::Api>;
@@ -27,7 +27,7 @@ pub trait RecursiveCaller {
         self.vault_proxy()
             .contract(to.clone())
             .accept_funds()
-            .with_egld_or_single_esdt_token_transfer(token_identifier.clone(), 0, amount.clone())
+            .with_egld_or_single_esdt_transfer((token_identifier.clone(), 0, amount.clone()))
             .async_call()
             .with_callback(self.callbacks().recursive_send_funds_callback(
                 to,

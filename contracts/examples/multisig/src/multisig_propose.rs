@@ -1,9 +1,9 @@
 use crate::action::{Action, CallActionData};
 
-elrond_wasm::imports!();
+mx_sc::imports!();
 
 /// Contains all events that can be emitted by the contract.
-#[elrond_wasm::module]
+#[mx_sc::module]
 pub trait MultisigProposeModule: crate::multisig_state::MultisigStateModule {
     fn propose_action(&self, action: Action<Self::Api>) -> usize {
         let (caller_id, caller_role) = self.get_caller_id_and_role();
@@ -54,6 +54,11 @@ pub trait MultisigProposeModule: crate::multisig_state::MultisigStateModule {
         opt_function: OptionalValue<ManagedBuffer>,
         arguments: MultiValueEncoded<ManagedBuffer>,
     ) -> CallActionData<Self::Api> {
+        require!(
+            egld_amount > 0 || opt_function.is_some(),
+            "proposed action has no effect"
+        );
+
         let endpoint_name = match opt_function {
             OptionalValue::Some(data) => data,
             OptionalValue::None => ManagedBuffer::new(),

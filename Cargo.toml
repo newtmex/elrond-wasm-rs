@@ -2,14 +2,15 @@
 resolver = "2"
 
 members = [
-  "elrond-wasm",
-  "elrond-wasm-debug",
-  "elrond-wasm-derive",
-  "elrond-wasm-modules",
-  "mandos",
-  "elrond-codec",
-  "elrond-codec-derive",
-  "elrond-interact-snippets",
+  "framework/base",
+  "framework/codec",
+  "framework/codec-derive",
+  "framework/debug",
+  "framework/derive",
+  "framework/meta",
+  "framework/scenario-format",
+  "framework/snippets",
+  "framework/wasm-adapter",
 
   "contracts/benchmarks/mappers/benchmark-common",
   "contracts/benchmarks/mappers/linked-list-repeat",
@@ -56,6 +57,8 @@ members = [
   "contracts/examples/empty/meta",
   "contracts/examples/factorial",
   "contracts/examples/factorial/meta",
+  "contracts/examples/fractional-nfts",
+  "contracts/examples/fractional-nfts/meta",
   "contracts/examples/lottery-esdt",
   "contracts/examples/lottery-esdt/meta",
   "contracts/examples/multisig",
@@ -73,11 +76,12 @@ members = [
   "contracts/examples/proxy-pause/meta",
   "contracts/examples/ping-pong-egld",
   "contracts/examples/ping-pong-egld/meta",
+  "contracts/examples/rewards-distribution",
+  "contracts/examples/rewards-distribution/meta",
+  "contracts/examples/seed-nft-minter",
+  "contracts/examples/seed-nft-minter/meta",
   "contracts/examples/token-release",
   "contracts/examples/token-release/meta",
-
-  "contracts/experimental/multisig-external-view",
-  "contracts/experimental/multisig-external-view/meta",
 
   "contracts/feature-tests/abi-tester",
   "contracts/feature-tests/abi-tester/meta",
@@ -146,11 +150,12 @@ members = [
   "contracts/feature-tests/use-module",
   "contracts/feature-tests/use-module/meta",
 
+  "contracts/modules",
+
   "tools/test-gen",
   "tools/erdpy-snippet-generator",
 ]
 
 exclude = [
-  "elrond-wasm-node",
-  "elrond-wasm-output",
+  "mx-sc-wasm-output",
 ]

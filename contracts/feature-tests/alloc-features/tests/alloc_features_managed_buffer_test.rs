@@ -1,5 +1,5 @@
-use elrond_wasm::types::{BoxedBytes, ManagedAddress, ManagedBuffer};
-use elrond_wasm_debug::*;
+use mx_sc::types::{BoxedBytes, ManagedAddress, ManagedBuffer};
+use mx_sc_debug::*;
 
 use alloc_features::managed_buffer_features_alloc::ManagedBufferFeatures;
 
@@ -9,7 +9,7 @@ fn test_managed_buffer_set_slice_should_panic() {
     let _ = DebugApi::dummy();
     let bf = alloc_features::contract_obj::<DebugApi>();
     let buffer = bf.mbuffer_from_slice(&[1, 2, 3][..]);
-    let _ = bf.mbuffer_set_slice(buffer.clone(), 4, &[5]);
+    let _ = bf.mbuffer_set_slice(buffer, 4, &[5]);
 }
 
 #[test]

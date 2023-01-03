@@ -1,12 +1,12 @@
 use adder::*;
-use elrond_wasm::storage::mappers::SingleValue;
-use elrond_wasm_debug::{mandos_system::model::*, num_bigint::BigUint, *};
+use mx_sc::storage::mappers::SingleValue;
+use mx_sc_debug::{mandos_system::model::*, num_bigint::BigUint, *};
 
 fn world() -> BlockchainMock {
     let mut blockchain = BlockchainMock::new();
     blockchain.set_current_dir_from_workspace("contracts/examples/adder");
 
-    blockchain.register_contract_builder("file:output/adder.wasm", adder::ContractBuilder);
+    blockchain.register_contract("file:output/adder.wasm", adder::ContractBuilder);
     blockchain
 }
 

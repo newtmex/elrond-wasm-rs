@@ -44,65 +44,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
-name = "elrond-codec"
-version = "0.13.0"
-dependencies = [
- "arrayvec",
- "elrond-codec-derive",
- "wee_alloc",
-]
-
-[[package]]
-name = "elrond-codec-derive"
-version = "0.13.0"
-dependencies = [
- "hex",
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
-name = "elrond-wasm"
-version = "0.35.0"
-dependencies = [
- "bitflags",
- "elrond-codec",
- "elrond-wasm-derive",
- "git-version",
- "hashbrown",
- "hex-literal",
- "num-traits",
- "wee_alloc",
-]
-
-[[package]]
-name = "elrond-wasm-derive"
-version = "0.35.0"
-dependencies = [
- "hex",
- "proc-macro2",
- "quote",
- "radix_trie",
- "syn",
-]
-
-[[package]]
-name = "elrond-wasm-node"
-version = "0.35.0"
-dependencies = [
- "elrond-wasm",
-]
-
-[[package]]
-name = "elrond-wasm-output"
-version = "0.35.0"
-dependencies = [
- "elrond-wasm-node",
- "wee_alloc",
-]
-
-[[package]]
 name = "endian-type"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -117,28 +58,6 @@ dependencies = [
  "cfg-if 1.0.0",
  "libc",
  "wasi",
-]
-
-[[package]]
-name = "git-version"
-version = "0.3.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f6b0decc02f4636b9ccad390dcbe77b722a77efedfa393caf8379a51d5c61899"
-dependencies = [
- "git-version-macro",
- "proc-macro-hack",
-]
-
-[[package]]
-name = "git-version-macro"
-version = "0.3.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fe69f1cbdb6e28af2bac214e943b99ce8a0a06b447d15d3e61161b0423139f3f"
-dependencies = [
- "proc-macro-hack",
- "proc-macro2",
- "quote",
- "syn",
 ]
 
 [[package]]
@@ -175,6 +94,57 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8452105ba047068f40ff7093dd1d9da90898e63dd61736462e9cdda6a90ad3c3"
 
 [[package]]
+name = "mx-sc"
+version = "0.38.0"
+dependencies = [
+ "bitflags",
+ "hashbrown",
+ "hex-literal",
+ "mx-sc-codec",
+ "mx-sc-derive",
+ "num-traits",
+ "wee_alloc",
+]
+
+[[package]]
+name = "mx-sc-codec"
+version = "0.16.0"
+dependencies = [
+ "arrayvec",
+ "mx-sc-codec-derive",
+ "wee_alloc",
+]
+
+[[package]]
+name = "mx-sc-codec-derive"
+version = "0.16.0"
+dependencies = [
+ "hex",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "mx-sc-derive"
+version = "0.38.0"
+dependencies = [
+ "hex",
+ "proc-macro2",
+ "quote",
+ "radix_trie",
+ "syn",
+]
+
+[[package]]
+name = "mx-sc-wasm-adapter"
+version = "0.38.0"
+dependencies = [
+ "mx-sc",
+ "wee_alloc",
+]
+
+[[package]]
 name = "nibble_vec"
 version = "0.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -196,12 +166,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "87f3e037eac156d1775da914196f0f37741a274155e34a0b7e427c35d2a2ecb9"
 
 [[package]]
-name = "proc-macro-hack"
-version = "0.5.19"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dbf0c48bc1d91375ae5c3cd81e3722dff1abcf81a30960240640d223f59fe0e5"
-
-[[package]]
 name = "proc-macro2"
 version = "1.0.37"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -214,7 +178,7 @@ dependencies = [
 name = "promises-features"
 version = "0.0.0"
 dependencies = [
- "elrond-wasm",
+ "mx-sc",
  "vault",
 ]
 
@@ -222,8 +186,7 @@ dependencies = [
 name = "promises-features-wasm"
 version = "0.0.0"
 dependencies = [
- "elrond-wasm-node",
- "elrond-wasm-output",
+ "mx-sc-wasm-adapter",
  "promises-features",
 ]
 
@@ -267,7 +230,7 @@ checksum = "8ccb82d61f80a663efe1f787a51b16b5a51e3314d6ac365b08639f52387b33f3"
 name = "vault"
 version = "0.0.0"
 dependencies = [
- "elrond-wasm",
+ "mx-sc",
 ]
 
 [[package]]

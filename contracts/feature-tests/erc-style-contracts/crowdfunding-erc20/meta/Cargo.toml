@@ -2,12 +2,12 @@
 name = "crowdfunding-erc20-meta"
 version = "0.0.0"
 authors = ["Andrei Marinica <andrei.marinica@elrond.com>"]
-edition = "2018"
+edition = "2021"
 publish = false
 
 [dependencies.crowdfunding-erc20]
 path = ".."
 
-[dependencies.elrond-wasm-debug]
-version = "0.36.0"
-path = "../../../../../elrond-wasm-debug"
+[dependencies.mx-sc-meta]
+version = "0.38.0"
+path = "../../../../../framework/meta"

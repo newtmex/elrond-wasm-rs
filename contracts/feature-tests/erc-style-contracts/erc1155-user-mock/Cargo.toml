@@ -2,18 +2,18 @@
 name = "erc1155-user-mock"
 version = "0.0.0"
 authors = ["Dorin Iancu <dorin.iancu@elrond.com>"]
-edition = "2018"
+edition = "2021"
 publish = false
 
 [lib]
 path = "src/lib.rs"
 
-[dependencies.elrond-wasm]
-version = "0.36.0"
-path = "../../../../elrond-wasm"
+[dependencies.mx-sc]
+version = "0.38.0"
+path = "../../../../framework/base"
 features = ["alloc"]
 
-[dev-dependencies.elrond-wasm-debug]
-version = "0.36.0"
-path = "../../../../elrond-wasm-debug"
+[dev-dependencies.mx-sc-debug]
+version = "0.38.0"
+path = "../../../../framework/debug"
 

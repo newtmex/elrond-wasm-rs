@@ -3,7 +3,7 @@ use crate::{
     user_role::UserRole,
 };
 
-elrond_wasm::imports!();
+mx_sc::imports!();
 
 /// Gas required to finish transaction after transfer-execute.
 const PERFORM_ACTION_FINISH_GAS: u64 = 300_000;
@@ -13,7 +13,7 @@ fn usize_add_isize(value: &mut usize, delta: isize) {
 }
 
 /// Contains all events that can be emitted by the contract.
-#[elrond_wasm::module]
+#[mx_sc::module]
 pub trait MultisigPerformModule:
     crate::multisig_state::MultisigStateModule + crate::multisig_events::MultisigEventsModule
 {
@@ -32,7 +32,17 @@ pub trait MultisigPerformModule:
     /// - convert between board member and proposer
     /// Will keep the board size and proposer count in sync.
     fn change_user_role(&self, action_id: usize, user_address: ManagedAddress, new_role: UserRole) {
-        let user_id = self.user_mapper().get_or_create_user(&user_address);
+        let user_id = if new_role == UserRole::None {
+            // avoid creating a new user just to delete it
+            let user_id = self.user_mapper().get_user_id(&user_address);
+            if user_id == 0 {
+                return;
+            }
+            user_id
+        } else {
+            self.user_mapper().get_or_create_user(&user_address)
+        };
+
         let user_id_to_role_mapper = self.user_id_to_role(user_id);
         let old_role = user_id_to_role_mapper.get();
         user_id_to_role_mapper.set(new_role);
@@ -182,8 +192,9 @@ pub trait MultisigPerformModule:
                 self.send()
                     .contract_call::<()>(call_data.to, call_data.endpoint_name)
                     .with_egld_transfer(call_data.egld_amount)
-                    .with_arguments_raw(call_data.arguments.into())
+                    .with_raw_arguments(call_data.arguments.into())
                     .async_call()
+                    .with_callback(self.callbacks().perform_async_call_callback())
                     .call_and_exit()
             },
             Action::SCDeployFromSource {
@@ -239,4 +250,26 @@ pub trait MultisigPerformModule:
             },
         }
     }
+
+    /// Callback only performs logging.
+    #[callback]
+    fn perform_async_call_callback(
+        &self,
+        #[call_result] call_result: ManagedAsyncCallResult<MultiValueEncoded<ManagedBuffer>>,
+    ) {
+        match call_result {
+            ManagedAsyncCallResult::Ok(results) => {
+                self.async_call_success(results);
+            },
+            ManagedAsyncCallResult::Err(err) => {
+                self.async_call_error(err.err_code, err.err_msg);
+            },
+        }
+    }
+
+    #[event("asyncCallSuccess")]
+    fn async_call_success(&self, #[indexed] results: MultiValueEncoded<ManagedBuffer>);
+
+    #[event("asyncCallError")]
+    fn async_call_error(&self, #[indexed] err_code: u32, #[indexed] err_message: ManagedBuffer);
 }

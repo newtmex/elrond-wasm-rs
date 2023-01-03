@@ -1,12 +1,12 @@
 use crowdfunding_esdt::*;
-use elrond_wasm::types::EgldOrEsdtTokenIdentifier;
-use elrond_wasm_debug::{mandos_system::model::*, *};
+use mx_sc::types::EgldOrEsdtTokenIdentifier;
+use mx_sc_debug::{mandos_system::model::*, *};
 
 fn world() -> BlockchainMock {
     let mut blockchain = BlockchainMock::new();
     blockchain.set_current_dir_from_workspace("contracts/examples/crowdfunding-esdt");
 
-    blockchain.register_contract_builder(
+    blockchain.register_contract(
         "file:output/crowdfunding-esdt.wasm",
         crowdfunding_esdt::ContractBuilder,
     );
@@ -253,5 +253,5 @@ fn crowdfunding_mandos_rust_test() {
                 .put_account(cf_sc, CheckAccount::new().esdt_balance(cf_token_id, 0u64)),
         );
 
-    world.write_mandos_trace("mandos-gen/crowdfunding_rust.scen.json");
+    world.write_mandos_trace("scenarios-gen/crowdfunding_rust.scen.json");
 }

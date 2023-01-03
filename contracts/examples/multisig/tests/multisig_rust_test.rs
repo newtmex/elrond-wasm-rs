@@ -1,9 +1,9 @@
 use std::borrow::Borrow;
 
-use elrond_wasm::types::{BoxedBytes, CodeMetadata, ManagedAddress};
-use elrond_wasm_debug::{managed_address, managed_biguint, rust_biguint, DebugApi};
 use multisig::user_role::UserRole;
 use multisig_rust_test_setup::{CallActionDataRaw, MultisigSetup};
+use mx_sc::types::{BoxedBytes, CodeMetadata, ManagedAddress};
+use mx_sc_debug::{managed_address, managed_biguint, rust_biguint, DebugApi};
 
 mod multisig_rust_test_setup;
 use adder::Adder;
@@ -132,7 +132,7 @@ fn remove_proposer_test() {
             assert_eq!(user_role, UserRole::None);
 
             let proposers = sc.get_all_proposers().to_vec();
-            assert_eq!(proposers.is_empty(), true);
+            assert!(proposers.is_empty());
         })
         .assert_ok();
 }
@@ -184,7 +184,7 @@ fn change_quorum_test() {
     // add another board member
     let new_board_member_addr = ms_setup.b_mock.create_user_account(&rust_zero);
     let (second_action_id, tx_result) =
-        ms_setup.call_propose(ActionRaw::AddBoardMember(new_board_member_addr.clone()));
+        ms_setup.call_propose(ActionRaw::AddBoardMember(new_board_member_addr));
     tx_result.assert_ok();
 
     ms_setup.call_sign(second_action_id).assert_ok();
@@ -215,6 +215,16 @@ fn transfer_execute_to_user_test() {
         &rust_biguint!(egld_amount),
     );
 
+    // failed attempt
+    let (_, tx_result) = ms_setup.call_propose(ActionRaw::SendTransferExecute(CallActionDataRaw {
+        to: user_addr.clone(),
+        egld_amount: rust_biguint!(0),
+        endpoint_name: BoxedBytes::empty(),
+        arguments: Vec::new(),
+    }));
+    tx_result.assert_user_error("proposed action has no effect");
+
+    // propose
     let (action_id, tx_result) =
         ms_setup.call_propose(ActionRaw::SendTransferExecute(CallActionDataRaw {
             to: user_addr.clone(),

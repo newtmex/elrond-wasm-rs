@@ -1,6 +1,6 @@
 #![no_std]
 
-elrond_wasm::imports!();
+mx_sc::imports!();
 
 mod lottery_info;
 mod status;
@@ -12,7 +12,7 @@ const PERCENTAGE_TOTAL: u32 = 100;
 const THIRTY_DAYS_IN_SECONDS: u64 = 60 * 60 * 24 * 30;
 const MAX_TICKETS: usize = 800;
 
-#[elrond_wasm::contract]
+#[mx_sc::contract]
 pub trait Lottery {
     #[init]
     fn init(&self) {}
@@ -342,7 +342,7 @@ pub trait Lottery {
         }
 
         let total_numbers = rand_numbers.len();
-        let mut rand = RandomnessSource::<Self::Api>::new();
+        let mut rand = RandomnessSource::new();
 
         for i in 0..amount {
             let rand_index = rand.next_usize_in_range(0, total_numbers);

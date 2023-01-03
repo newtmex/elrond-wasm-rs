@@ -1,8 +1,8 @@
-elrond_wasm::imports!();
+mx_sc::imports!();
 
-#[elrond_wasm::module]
+#[mx_sc::module]
 pub trait FungibleTokenMapperFeatures:
-    elrond_wasm_modules::default_issue_callbacks::DefaultIssueCallbacksModule
+    mx_sc_modules::default_issue_callbacks::DefaultIssueCallbacksModule
 {
     #[payable("EGLD")]
     #[endpoint]
@@ -139,7 +139,7 @@ pub trait FungibleTokenMapperFeatures:
 
     #[view(getFungibleTokenId)]
     #[storage_mapper("fungibleTokenMapper")]
-    fn fungible_token_mapper(&self) -> FungibleTokenMapper<Self::Api>;
+    fn fungible_token_mapper(&self) -> FungibleTokenMapper;
 
     #[storage_mapper("rolesSet")]
     fn roles_set(&self) -> SingleValueMapper<bool>;

@@ -1,17 +1,17 @@
-use elrond_wasm::{
-    api::ManagedTypeApi,
-    elrond_codec::multi_types::OptionalValue,
-    types::{Address, BigUint, BoxedBytes, CodeMetadata, ManagedBuffer, ManagedVec},
-};
-use elrond_wasm_debug::{
-    managed_address, rust_biguint, testing_framework::*, tx_mock::TxResult, DebugApi,
-};
 use multisig::{
     multisig_perform::MultisigPerformModule, multisig_propose::MultisigProposeModule,
     user_role::UserRole, Multisig,
 };
+use mx_sc::{
+    api::ManagedTypeApi,
+    codec::multi_types::OptionalValue,
+    types::{Address, BigUint, BoxedBytes, CodeMetadata, ManagedBuffer, ManagedVec},
+};
+use mx_sc_debug::{
+    managed_address, rust_biguint, testing_framework::*, tx_mock::TxResult, DebugApi,
+};
 
-const MULTISIG_WASM_PATH: &'static str = "multisig/output/multisig.wasm";
+const MULTISIG_WASM_PATH: &str = "multisig/output/multisig.wasm";
 const QUORUM_SIZE: usize = 1;
 pub const EGLD_TOKEN_ID: &[u8] = b"EGLD";
 
@@ -262,7 +262,7 @@ where
             &self.ms_wrapper,
             &rust_biguint!(0),
             |sc| {
-                let _ = sc.discard_action(action_id);
+                sc.discard_action(action_id);
             },
         )
     }

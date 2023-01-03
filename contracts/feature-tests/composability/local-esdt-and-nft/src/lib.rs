@@ -1,7 +1,7 @@
 #![no_std]
 
-elrond_wasm::imports!();
-elrond_wasm::derive_imports!();
+mx_sc::imports!();
+mx_sc::derive_imports!();
 
 // used as mock attributes for NFTs
 #[derive(TopEncode, TopDecode, TypeAbi)]
@@ -11,7 +11,7 @@ pub struct Color {
     b: u8,
 }
 
-#[elrond_wasm::contract]
+#[mx_sc::contract]
 pub trait LocalEsdtAndEsdtNft {
     #[init]
     fn init(&self) {}
@@ -81,6 +81,7 @@ pub trait LocalEsdtAndEsdtNft {
                     can_freeze: true,
                     can_wipe: true,
                     can_pause: true,
+                    can_transfer_create_role: true,
                     can_change_owner: true,
                     can_upgrade: true,
                     can_add_special_roles: true,
@@ -185,6 +186,7 @@ pub trait LocalEsdtAndEsdtNft {
                     can_freeze: true,
                     can_wipe: true,
                     can_pause: true,
+                    can_transfer_create_role: true,
                     can_change_owner: true,
                     can_upgrade: true,
                     can_add_special_roles: true,
@@ -225,6 +227,21 @@ pub trait LocalEsdtAndEsdtNft {
             .async_call()
             .with_callback(self.callbacks().change_roles_callback())
             .call_and_exit()
+    }
+
+    #[endpoint(controlChanges)]
+    fn control_changes(&self, token: TokenIdentifier) {
+        let property_arguments = TokenPropertyArguments {
+            can_freeze: Some(true),
+            can_burn: Some(true),
+            ..Default::default()
+        };
+
+        self.send()
+            .esdt_system_sc_proxy()
+            .control_changes(&token, &property_arguments)
+            .async_call()
+            .call_and_exit();
     }
 
     // views

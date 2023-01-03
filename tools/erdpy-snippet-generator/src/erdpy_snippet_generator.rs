@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use elrond_wasm::elrond_codec::{top_encode_to_vec_u8_or_panic, TopEncode};
+use mx_sc::codec::{top_encode_to_vec_u8_or_panic, TopEncode};
 use num_traits::Zero;
 
 mod cmd_builder;
@@ -310,7 +310,7 @@ impl ErdpySnippetGenerator {
             tx_data += &arg_as_hex;
         }
 
-        println!("{}", tx_data);
+        println!("{tx_data}");
     }
 
     fn handle_common_non_query_steps(&self, cmd_builder: &mut CmdBuilder) {

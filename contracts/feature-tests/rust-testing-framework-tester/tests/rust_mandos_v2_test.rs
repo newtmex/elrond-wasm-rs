@@ -1,14 +1,14 @@
-use elrond_wasm_debug::{mandos_system::model::*, *};
+use mx_sc_debug::{mandos_system::model::*, *};
 use rust_testing_framework_tester::*; // TODO: clean up imports
 
-const WASM_PATH_EXPR: &'static str = "file:output/rust-testing-framework-tester.wasm";
+const WASM_PATH_EXPR: &str = "file:output/rust-testing-framework-tester.wasm";
 
 fn world() -> BlockchainMock {
     let mut blockchain = BlockchainMock::new();
     blockchain
         .set_current_dir_from_workspace("contracts/feature_tests/rust-testing-framework-tester");
 
-    blockchain.register_contract_builder(
+    blockchain.register_contract(
         WASM_PATH_EXPR,
         rust_testing_framework_tester::ContractBuilder,
     );
@@ -42,5 +42,5 @@ fn tester_deploy_test() {
     assert_eq!(new_address, adder_contract.to_address());
     assert_eq!(result, "constructor-result");
 
-    world.write_mandos_trace("mandos/trace-deploy.scen.json");
+    world.write_mandos_trace("scenarios/trace-deploy.scen.json");
 }

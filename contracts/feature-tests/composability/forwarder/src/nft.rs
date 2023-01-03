@@ -1,5 +1,5 @@
-elrond_wasm::imports!();
-elrond_wasm::derive_imports!();
+mx_sc::imports!();
+mx_sc::derive_imports!();
 
 use super::storage;
 
@@ -20,7 +20,7 @@ pub struct ComplexAttributes<M: ManagedTypeApi> {
     pub boxed_bytes: ManagedBuffer<M>,
 }
 
-#[elrond_wasm::module]
+#[mx_sc::module]
 pub trait ForwarderNftModule: storage::ForwarderStorageModule {
     #[view]
     fn get_nft_balance(&self, token_identifier: &TokenIdentifier, nonce: u64) -> BigUint {
@@ -63,6 +63,7 @@ pub trait ForwarderNftModule: storage::ForwarderStorageModule {
                     can_freeze: true,
                     can_wipe: true,
                     can_pause: true,
+                    can_transfer_create_role: true,
                     can_change_owner: true,
                     can_upgrade: true,
                     can_add_special_roles: true,

@@ -1,8 +1,8 @@
-use elrond_wasm_debug::*;
+use mx_sc_debug::*;
 
 fn world() -> BlockchainMock {
     let mut blockchain = BlockchainMock::new();
-    blockchain.register_contract_builder(
+    blockchain.register_contract(
         "file:output/kitty-genetic-alg.wasm",
         kitty_genetic_alg::ContractBuilder,
     );
@@ -11,10 +11,10 @@ fn world() -> BlockchainMock {
 
 #[test]
 fn generate_kitty_genes_rs() {
-    elrond_wasm_debug::mandos_rs("mandos/generate-kitty-genes.scen.json", world());
+    mx_sc_debug::scenario_rs("scenarios/generate-kitty-genes.scen.json", world());
 }
 
 #[test]
 fn init_rs() {
-    elrond_wasm_debug::mandos_rs("mandos/init.scen.json", world());
+    mx_sc_debug::scenario_rs("scenarios/init.scen.json", world());
 }

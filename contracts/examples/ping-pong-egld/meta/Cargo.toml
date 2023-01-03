@@ -2,12 +2,12 @@
 name = "ping-pong-egld-meta"
 version = "0.0.0"
 authors = [ "Bruda Claudiu-Marcel <claudiu725@yahoo.com>",]
-edition = "2018"
+edition = "2021"
 publish = false
 
 [dependencies.ping-pong-egld]
 path = ".."
 
-[dependencies.elrond-wasm-debug]
-version = "0.36.0"
-path = "../../../../elrond-wasm-debug"
+[dependencies.mx-sc-meta]
+version = "0.38.0"
+path = "../../../../framework/meta"

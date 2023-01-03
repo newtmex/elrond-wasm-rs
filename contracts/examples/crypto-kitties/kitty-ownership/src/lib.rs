@@ -1,14 +1,14 @@
 #![no_std]
 #![allow(clippy::suspicious_operation_groupings)]
 
-elrond_wasm::imports!();
+mx_sc::imports!();
 
 use core::cmp::max;
 
 use kitty::{kitty_genes::*, Kitty};
 use random::*;
 
-#[elrond_wasm::contract]
+#[mx_sc::contract]
 pub trait KittyOwnership {
     #[init]
     fn init(
@@ -394,7 +394,7 @@ pub trait KittyOwnership {
 
         total_kitties += 1;
         self.total_kitties().set(total_kitties);
-        self.kitty_by_id(new_kitty_id).set(&kitty);
+        self.kitty_by_id(new_kitty_id).set(kitty);
 
         self.perform_transfer(&ManagedAddress::zero(), owner, new_kitty_id);
 

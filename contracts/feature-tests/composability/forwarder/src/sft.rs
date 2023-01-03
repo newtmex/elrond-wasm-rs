@@ -1,8 +1,8 @@
-elrond_wasm::imports!();
+mx_sc::imports!();
 
 use super::storage;
 
-#[elrond_wasm::module]
+#[mx_sc::module]
 pub trait ForwarderSftModule: storage::ForwarderStorageModule {
     #[payable("EGLD")]
     #[endpoint]
@@ -20,6 +20,7 @@ pub trait ForwarderSftModule: storage::ForwarderStorageModule {
                     can_freeze: true,
                     can_wipe: true,
                     can_pause: true,
+                    can_transfer_create_role: true,
                     can_change_owner: true,
                     can_upgrade: true,
                     can_add_special_roles: true,

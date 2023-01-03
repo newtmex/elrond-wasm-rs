@@ -2,7 +2,7 @@
 name = "elrond-sc-wegld-swap-meta"
 version = "0.0.0"
 authors = [ "Dorin Iancu <dorin.iancu@elrond.com>",]
-edition = "2018"
+edition = "2021"
 publish = false
 
 [dev-dependencies]
@@ -10,10 +10,10 @@ publish = false
 [dependencies.elrond-sc-wegld-swap]
 path = ".."
 
-[dependencies.elrond-wasm]
-version = "0.36.0"
-path = "../../../../elrond-wasm"
+[dependencies.mx-sc]
+version = "0.38.0"
+path = "../../../../framework/base"
 
-[dependencies.elrond-wasm-debug]
-version = "0.36.0"
-path = "../../../../elrond-wasm-debug"
+[dependencies.mx-sc-meta]
+version = "0.38.0"
+path = "../../../../framework/meta"

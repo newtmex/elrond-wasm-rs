@@ -1,7 +1,5 @@
-elrond_wasm::imports!();
-elrond_wasm::derive_imports!();
-
-use elrond_wasm::elrond_codec::TopEncode;
+mx_sc::imports!();
+mx_sc::derive_imports!();
 
 const NFT_AMOUNT: u32 = 1;
 const ROYALTIES_MAX: u32 = 10_000;
@@ -13,7 +11,7 @@ pub struct PriceTag<M: ManagedTypeApi> {
     pub amount: BigUint<M>,
 }
 
-#[elrond_wasm::module]
+#[mx_sc::module]
 pub trait NftModule {
     // endpoints - owner-only
 
@@ -34,6 +32,7 @@ pub trait NftModule {
                     can_freeze: true,
                     can_wipe: true,
                     can_pause: true,
+                    can_transfer_create_role: true,
                     can_change_owner: false,
                     can_upgrade: false,
                     can_add_special_roles: true,

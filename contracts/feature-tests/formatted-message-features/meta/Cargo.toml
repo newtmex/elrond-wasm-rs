@@ -1,7 +1,7 @@
 [package]
 name = "formatted-message-features-meta"
 version = "0.0.0"
-edition = "2018"
+edition = "2021"
 publish = false
 authors = [ "you",]
 
@@ -10,6 +10,6 @@ authors = [ "you",]
 [dependencies.formatted-message-features]
 path = ".."
 
-[dependencies.elrond-wasm-debug]
-version = "0.36.0"
-path = "../../../../elrond-wasm-debug"
+[dependencies.mx-sc-meta]
+version = "0.38.0"
+path = "../../../../framework/meta"

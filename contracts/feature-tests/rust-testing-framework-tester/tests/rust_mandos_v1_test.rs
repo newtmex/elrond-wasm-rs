@@ -3,23 +3,23 @@ use forwarder::call_sync::*;
 use num_traits::ToPrimitive;
 
 use basic_features::BasicFeatures;
-use elrond_wasm::{
-    elrond_codec::Empty,
+use mx_sc::{
+    codec::Empty,
     types::{Address, BigUint, EsdtLocalRole, EsdtTokenPayment, ManagedVec, TokenIdentifier},
 };
-use elrond_wasm_debug::{
+use mx_sc_debug::{
     assert_values_eq, managed_address, managed_biguint, managed_buffer, managed_token_id,
-    rust_biguint, testing_framework::*, tx_mock::TxInputESDT, DebugApi,
+    rust_biguint, testing_framework::*, tx_mock::TxTokenTransfer, DebugApi,
 };
 use rust_testing_framework_tester::{dummy_module::DummyModule, *};
 
-const TEST_OUTPUT_PATH: &'static str = "test.scen.json";
-const TEST_MULTIPLE_SC_OUTPUT_PATH: &'static str = "test_multiple_sc.scen.json";
-const TEST_ESDT_OUTPUT_PATH: &'static str = "test_esdt_generation.scen.json";
+const TEST_OUTPUT_PATH: &str = "test.scen.json";
+const TEST_MULTIPLE_SC_OUTPUT_PATH: &str = "test_multiple_sc.scen.json";
+const TEST_ESDT_OUTPUT_PATH: &str = "test_esdt_generation.scen.json";
 
-const SC_WASM_PATH: &'static str = "output/rust-testing-framework-tester.wasm";
-const ADDER_WASM_PATH: &'static str = "../../examples/adder/output/adder.wasm";
-const BASIC_FEATURES_WASM_PATH: &'static str =
+const SC_WASM_PATH: &str = "output/rust-testing-framework-tester.wasm";
+const ADDER_WASM_PATH: &str = "../../examples/adder/output/adder.wasm";
+const BASIC_FEATURES_WASM_PATH: &str =
     "../../feature-tests/basic-features/output/basic-features.wasm";
 
 #[test]
@@ -639,12 +639,12 @@ fn test_esdt_multi_transfer() {
     );
 
     let transfers = vec![
-        TxInputESDT {
+        TxTokenTransfer {
             token_identifier: token_id_1.to_vec(),
             nonce: 0,
             value: rust_biguint!(100),
         },
-        TxInputESDT {
+        TxTokenTransfer {
             token_identifier: token_id_2.to_vec(),
             nonce: nft_nonce,
             value: rust_biguint!(1),
@@ -1220,14 +1220,14 @@ fn test_managed_values_standalone_consistency() {
         BASIC_FEATURES_WASM_PATH,
     );
 
-    let foo = TokenIdentifier::<DebugApi>::from_esdt_bytes(b"FOO-a1a1a1");
-    let _ = blockchain_wrapper
+    let foo_token = TokenIdentifier::<DebugApi>::from_esdt_bytes(b"FOO-a1a1a1");
+    blockchain_wrapper
         .execute_query(&basic_features_wrapper, |_sc| {
             let _bar = TokenIdentifier::<DebugApi>::from_esdt_bytes(b"BAR-a1a1a1");
             // 'foo' and '_bar' have the same numerical handle value
             // check that the value of 'foo' is taken from the correct context
             assert_eq!(
-                foo,
+                foo_token,
                 TokenIdentifier::<DebugApi>::from_esdt_bytes(b"FOO-a1a1a1")
             );
         })
@@ -1250,7 +1250,7 @@ fn test_managed_values_argument_and_return_value_consistency() {
     let argument = managed_biguint!(42u64);
     let mut result = managed_biguint!(0u64);
 
-    let _ = blockchain_wrapper
+    blockchain_wrapper
         .execute_tx(
             &owner_address,
             &basic_features_wrapper,
@@ -1285,7 +1285,7 @@ fn test_managed_values_insert_handle_panics() {
 
     let item = managed_biguint!(42);
 
-    let _ = blockchain_wrapper
+    blockchain_wrapper
         .execute_tx(
             &owner_address,
             &basic_features_wrapper,
@@ -1401,17 +1401,18 @@ fn test_back_and_forth_transfers() {
         &third_token_amount,
     );
 
-    let mut transfers = Vec::new();
-    transfers.push(TxInputESDT {
-        token_identifier: first_token_id.to_vec(),
-        nonce: 0,
-        value: first_token_amount.clone(),
-    });
-    transfers.push(TxInputESDT {
-        token_identifier: second_token_id.to_vec(),
-        nonce: 0,
-        value: second_token_amount.clone(),
-    });
+    let transfers = vec![
+        TxTokenTransfer {
+            token_identifier: first_token_id.to_vec(),
+            nonce: 0,
+            value: first_token_amount.clone(),
+        },
+        TxTokenTransfer {
+            token_identifier: second_token_id.to_vec(),
+            nonce: 0,
+            value: second_token_amount.clone(),
+        },
+    ];
 
     wrapper
         .execute_esdt_multi_transfer(&user, &forwarder_wrapper, &transfers, |sc| {
@@ -1578,7 +1579,7 @@ fn dump_state_all_test() {
             sc.total_value().set(&managed_biguint!(1_000_000));
             sc.value_per_caller(&managed_address!(&user_addr))
                 .set(&managed_biguint!(2_000_000));
-            sc.callback_executed().set(&true);
+            sc.callback_executed().set(true);
         })
         .assert_ok();
 

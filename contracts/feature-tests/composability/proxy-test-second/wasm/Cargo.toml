@@ -2,7 +2,7 @@
 name = "proxy-test-second-wasm"
 version = "0.0.0"
 authors = ["Andrei Marinica <andrei.marinica@elrond.com>"]
-edition = "2018"
+edition = "2021"
 publish = false
 
 [lib]
@@ -18,14 +18,9 @@ panic = "abort"
 [dependencies.proxy-test-second]
 path = ".."
 
-[dependencies.elrond-wasm-node]
-version = "0.36.0"
-path = "../../../../../elrond-wasm-node"
-
-[dependencies.elrond-wasm-output]
-version = "0.36.0"
-path = "../../../../../elrond-wasm-output"
-features=["wasm-output-mode"]
+[dependencies.mx-sc-wasm-adapter]
+version = "0.38.0"
+path = "../../../../../framework/wasm-adapter"
 
 [workspace]
 members = ["."]

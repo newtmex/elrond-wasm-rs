@@ -4,6 +4,43 @@ There are several crates in this repo, this changelog will keep track of all of 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [elrond-wasm 0.38.0, elrond-codec 0.16.0, mandos 0.18.0] - 2022-12-15
+- `ContractCall` refactor. Building a contract call comes with harder compile-time constraints. This also reduces compiled code size.
+- `ContractBase` supertrait can be now stated explicitly for contract and module traits.
+- Debugger:
+	- Callback payment is now set correctly.
+	- Function names are represented internally as strings instead of bytes, which aids debugging.
+- Removed the `ei-1-2` feature, which was guarding the newer VM functions. These functions are in the mainnet, so this feature is no longer needed.
+- New utility functions: `self.send().esdt_local_burn_multi(...`, `self.blockchain().get_token_attributes(...)`.
+- Updated all crates to Rust 2021.
+
+## [elrond-wasm 0.37.0, elrond-codec 0.15.0] - 2022-12-09
+- Multi-contract build system:
+	- build system refactor;
+	- `multicontract.toml` config system with labels,
+	- eliminated monomorphization issue that was bloating some contracts;
+	- build post-processing: `wasm2wat`, imports via `wasm-objdump`.
+- Support for the new async call system (promises):
+	- new APIs;
+	- a new flavor of callbacks (`#[promises-callback]`);
+	- callback optimizations.
+- `elrond-codec` refactor: removed `TopEncodeNoErr`, `NestedEncodeNoErr` and `TypeInfo`
+- System SC proxy: added support for `controlChanges` endpoint and transfer create role (from community).
+- Module updates:
+	- `MergedTokenInstances` module;
+	- Governance module improvements;
+	- `set_if_empty` for FungibleTokenMapper and NonFungibleTokenMapper.
+- `IntoMultiValue` trait.
+- Storage mapper improvements:
+	- Storage mappers can read from another contract.
+	- `BiDiMapper` improvements;
+	- Fixed missing substitution rules for `FungibleTokenMapper`, `NonFungibleTokenMapper`, `UniqueIdMapper`, `BiDiMapper`, `WhitelistMapper`, `RandomnessSource`;
+	- Added `take` and `replace` methods for `SingleValueMapper`;
+	- Implemented `Extend` trait for `UnorderedSetMapper`.
+
+## [elrond-wasm 0.36.1] - 2022-11-01
+- Deprecated `ContractCall` `execute_on_dest_context_ignore_result` method, since it is currently redundant.
+
 ## [elrond-wasm 0.36.0, elrond-codec 0.14.0] - 2022-10-13
 - `EsdtTokenPayment` legacy decode: objects encoded by older versions of the framework can now also be decoded, if flag `esdt-token-payment-legacy-decode` is active.
 - Codec `NestedDecodeInput` new  `peek_into` method.
