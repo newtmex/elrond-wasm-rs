@@ -1,16 +1,16 @@
 [package]
-name = "elrond-sc-price-aggregator-meta"
+name = "multiversx-price-aggregator-sc-meta"
 version = "0.0.0"
 edition = "2021"
 publish = false
 
-[dependencies.elrond-sc-price-aggregator]
+[dependencies.multiversx-price-aggregator-sc]
 path = ".."
 
-[dependencies.mx-sc]
-version = "0.38.0"
+[dependencies.multiversx-sc]
+version = "0.39.8"
 path = "../../../../framework/base"
 
-[dependencies.mx-sc-meta]
-version = "0.38.0"
+[dependencies.multiversx-sc-meta]
+version = "0.39.8"
 path = "../../../../framework/meta"

@@ -1,12 +1,11 @@
-use elrond_sc_price_aggregator::{staking::StakingModule, PriceAggregator};
-use mx_sc::types::{Address, EgldOrEsdtTokenIdentifier, MultiValueEncoded};
-use mx_sc_debug::{
+use multiversx_price_aggregator_sc::{staking::StakingModule, PriceAggregator};
+use multiversx_sc::types::{Address, EgldOrEsdtTokenIdentifier, MultiValueEncoded};
+use multiversx_sc_modules::pause::PauseModule;
+use multiversx_sc_scenario::{
     managed_address, managed_biguint, managed_buffer, rust_biguint,
-    testing_framework::{BlockchainStateWrapper, ContractObjWrapper},
-    tx_mock::TxResult,
+    testing_framework::{BlockchainStateWrapper, ContractObjWrapper, TxResult},
     DebugApi,
 };
-use mx_sc_modules::pause::PauseModule;
 
 pub const NR_ORACLES: usize = 4;
 pub const SUBMISSION_COUNT: usize = 3;
@@ -20,18 +19,22 @@ pub const SLASH_QUORUM: usize = 2;
 
 pub struct PriceAggSetup<PriceAggObjBuilder>
 where
-    PriceAggObjBuilder: 'static + Copy + Fn() -> elrond_sc_price_aggregator::ContractObj<DebugApi>,
+    PriceAggObjBuilder:
+        'static + Copy + Fn() -> multiversx_price_aggregator_sc::ContractObj<DebugApi>,
 {
     pub b_mock: BlockchainStateWrapper,
     pub owner: Address,
     pub oracles: Vec<Address>,
-    pub price_agg:
-        ContractObjWrapper<elrond_sc_price_aggregator::ContractObj<DebugApi>, PriceAggObjBuilder>,
+    pub price_agg: ContractObjWrapper<
+        multiversx_price_aggregator_sc::ContractObj<DebugApi>,
+        PriceAggObjBuilder,
+    >,
 }
 
 impl<PriceAggObjBuilder> PriceAggSetup<PriceAggObjBuilder>
 where
-    PriceAggObjBuilder: 'static + Copy + Fn() -> elrond_sc_price_aggregator::ContractObj<DebugApi>,
+    PriceAggObjBuilder:
+        'static + Copy + Fn() -> multiversx_price_aggregator_sc::ContractObj<DebugApi>,
 {
     pub fn new(builder: PriceAggObjBuilder) -> Self {
         let rust_zero = rust_biguint!(0);

@@ -1,15 +1,19 @@
-use mx_sc::{
+use multiversx_sc::{
     api::ManagedTypeApi,
-    types::{BigUint, EgldOrEsdtTokenIdentifier, ManagedAddress},
+    types::{EgldOrEsdtTokenIdentifier, EgldOrEsdtTokenPayment, ManagedAddress},
 };
 
-mx_sc::derive_imports!();
+multiversx_sc::derive_imports!();
 
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode, TypeAbi)]
 pub struct DepositInfo<M: ManagedTypeApi> {
-    pub amount: BigUint<M>,
     pub depositor_address: ManagedAddress<M>,
+    pub payment: EgldOrEsdtTokenPayment<M>,
     pub expiration_round: u64,
-    pub token_name: EgldOrEsdtTokenIdentifier<M>,
+}
+
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode, TypeAbi, Clone, ManagedVecItem)]
+pub struct FundType<M: ManagedTypeApi> {
+    pub token: EgldOrEsdtTokenIdentifier<M>,
     pub nonce: u64,
 }

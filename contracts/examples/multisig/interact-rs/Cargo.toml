@@ -1,7 +1,7 @@
 [package]
 name = "multisig-interact"
 version = "0.0.0"
-authors = ["Andrei Marinica <andrei.marinica@elrond.com>"]
+authors = ["Andrei Marinica <andrei.marinica@multiversx.com>"]
 edition = "2021"
 publish = false
 
@@ -12,10 +12,10 @@ path = "src/multisig_interact.rs"
 [dependencies.multisig]
 path = ".."
 
-[dependencies.mx-sc-modules]
-version = "0.38.0"
+[dependencies.multiversx-sc-modules]
+version = "0.39.8"
 path = "../../../../contracts/modules"
 
-[dependencies.mx-sc-snippets]
-version = "0.38.0"
+[dependencies.multiversx-sc-snippets]
+version = "0.39.8"
 path = "../../../../framework/snippets"

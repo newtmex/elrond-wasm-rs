@@ -1,7 +1,7 @@
 [package]
 name = "transfer-role-features"
 version = "0.0.0"
-authors = ["Dorin Marian Iancu <dorin.iancu@elrond.com>"]
+authors = ["Dorin Marian Iancu <dorin.iancu@multiversx.com>"]
 edition = "2021"
 publish = false
 
@@ -11,14 +11,14 @@ path = "src/lib.rs"
 [dev-dependencies.vault]
 path = "../vault"
 
-[dependencies.mx-sc]
-version = "0.38.0"
+[dependencies.multiversx-sc]
+version = "0.39.8"
 path = "../../../../framework/base"
 
-[dependencies.mx-sc-modules]
-version = "0.38.0"
+[dependencies.multiversx-sc-modules]
+version = "0.39.8"
 path = "../../../../contracts/modules"
 
-[dev-dependencies.mx-sc-debug]
-version = "0.38.0"
-path = "../../../../framework/debug"
+[dev-dependencies.multiversx-sc-scenario]
+version = "0.39.8"
+path = "../../../../framework/scenario"

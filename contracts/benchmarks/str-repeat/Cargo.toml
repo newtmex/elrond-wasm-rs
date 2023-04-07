@@ -1,18 +1,18 @@
 [package]
 name = "str-repeat"
 version = "0.0.0"
-authors = ["Andrei Marinica <andrei.marinica@elrond.com>"]
+authors = ["Andrei Marinica <andrei.marinica@multiversx.com>"]
 edition = "2021"
 publish = false
 
 [lib]
 path = "src/str_repeat.rs"
 
-[dependencies.mx-sc]
-version = "0.38.0"
+[dependencies.multiversx-sc]
+version = "0.39.8"
 path = "../../../framework/base"
 features = ["alloc"]
 
-[dev-dependencies.mx-sc-debug]
-version = "0.38.0"
-path = "../../../framework/debug"
+[dev-dependencies.multiversx-sc-scenario]
+version = "0.39.8"
+path = "../../../framework/scenario"

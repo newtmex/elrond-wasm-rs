@@ -8,13 +8,13 @@ publish = false
 [lib]
 path = "src/empty.rs"
 
-[dependencies.mx-sc]
-version = "0.38.0"
+[dependencies.multiversx-sc]
+version = "0.39.8"
 path = "../../../framework/base"
 
-[dev-dependencies.mx-sc-debug]
-version = "0.38.0"
-path = "../../../framework/debug"
+[dev-dependencies.multiversx-sc-scenario]
+version = "0.39.8"
+path = "../../../framework/scenario"
 
 [dev-dependencies]
 num-bigint = "0.4.2"

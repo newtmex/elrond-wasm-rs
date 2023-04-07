@@ -1,29 +1,28 @@
 [package]
-name = "mx-sc"
-version = "0.38.0"
+name = "multiversx-sc"
+version = "0.39.8"
 edition = "2021"
 
-authors = ["Andrei Marinica <andrei.marinica@elrond.com>", "MultiversX <contact@multiversx.com>"]
+authors = ["Andrei Marinica <andrei.marinica@multiversx.com>", "MultiversX <contact@multiversx.com>"]
 license = "GPL-3.0-only"
 readme = "README.md"
-repository = "https://github.com/ElrondNetwork/elrond-wasm-rs"
+repository = "https://github.com/multiversx/mx-sdk-rs"
 homepage = "https://multiversx.com/"
-documentation = "https://docs.elrond.com/"
+documentation = "https://docs.multiversx.com/"
 description = "MultiversX smart contract API"
 keywords = ["multiversx", "wasm", "webassembly", "blockchain", "contract"]
 categories = ["no-std", "wasm", "cryptography::cryptocurrencies", "development-tools"]
 
 [features]
-num-bigint = ["mx-sc-codec/num-bigint"]
-alloc = ["mx-sc-codec/alloc"]
+num-bigint = ["multiversx-sc-codec/num-bigint"]
+alloc = ["multiversx-sc-codec/alloc"]
 ei-unmanaged = ["alloc"]
 promises = []
 big-float = []
 esdt-token-payment-legacy-decode = []
 
 [dependencies]
-wee_alloc = "0.4"
-hashbrown = "0.11.2"
+hashbrown = "0.13.2"
 hex-literal = "0.3.1"
 bitflags = "1.3.2"
 
@@ -31,11 +30,11 @@ bitflags = "1.3.2"
 version = "0.2"
 default-features = false
 
-[dependencies.mx-sc-derive]
-version = "=0.38.0"
+[dependencies.multiversx-sc-derive]
+version = "=0.39.8"
 path = "../derive"
 
-[dependencies.mx-sc-codec]
-version = "=0.16.0"
+[dependencies.multiversx-sc-codec]
+version = "=0.17.1"
 path = "../codec"
 features = ["derive"]

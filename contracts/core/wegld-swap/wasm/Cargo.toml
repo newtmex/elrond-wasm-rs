@@ -1,7 +1,7 @@
 [package]
-name = "elrond-sc-wegld-swap-wasm"
+name = "multiversx-wegld-swap-sc-wasm"
 version = "0.0.0"
-authors = [ "Dorin Iancu <dorin.iancu@elrond.com>",]
+authors = [ "Dorin Iancu <dorin.iancu@multiversx.com>",]
 edition = "2021"
 publish = false
 
@@ -20,9 +20,9 @@ lto = true
 debug = false
 panic = "abort"
 
-[dependencies.elrond-sc-wegld-swap]
+[dependencies.multiversx-wegld-swap-sc]
 path = ".."
 
-[dependencies.mx-sc-wasm-adapter]
-version = "0.38.0"
+[dependencies.multiversx-sc-wasm-adapter]
+version = "0.39.8"
 path = "../../../../framework/wasm-adapter"

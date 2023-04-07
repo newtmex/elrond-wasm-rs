@@ -1,5 +1,7 @@
-# elrond-wasm-node
+# Smart contract WASM adapter
 
-Contains the actual calls to the Arwen VM API, and their wrapper.
+[![crates.io](https://img.shields.io/crates/v/multiversx-sc-wasm-adapter.svg)](https://crates.io/crates/multiversx-sc-wasm-adapter)
 
-Can be build both for wasm or for debug mode, but will only be used in the wasm output.
+Contains the actual calls to the MultiversX VM API, and their wrapper.
+
+Note that it is the only part of the framework that "knows" about WASM and the VM environment interface.

@@ -1,31 +1,34 @@
 [package]
-name = "mx-sc-snippets"
-version = "0.38.0"
+name = "multiversx-sc-snippets"
+version = "0.39.8"
 edition = "2021"
 
 authors = [
-    "Andrei Marinica <andrei.marinica@elrond.com>",
     "MultiversX <contact@multiversx.com>",
 ]
 license = "GPL-3.0-only"
 readme = "README.md"
-repository = "https://github.com/ElrondNetwork/elrond-wasm-rs"
+repository = "https://github.com/multiversx/mx-sdk-rs"
 homepage = "https://multiversx.com/"
-documentation = "https://docs.elrond.com/"
+documentation = "https://docs.multiversx.com/"
 description = "MultiversX framework for building smart contract interaction snippets"
 keywords = ["multiversx", "blockchain", "contract", "snippets"]
 categories = ["cryptography::cryptocurrencies"]
 
 [dependencies]
-tokio = { version = "1.12.0", features = ["full"] }
+tokio = { version = "1.24", features = ["full"] }
 hex = "0.4"
 base64 = "0.13.0"
 log = "0.4.17"
 env_logger = "0.8.4"
 
-[dependencies.mx-sc-debug]
-version = "=0.38.0"
-path = "../debug"
+[dependencies.multiversx-sc-scenario]
+version = "=0.39.8"
+path = "../scenario"
+
+[dependencies.multiversx-sdk]
+version = "=0.1.1"
+path = "../../sdk/core"
 
 [dependencies.elrond-sdk-erdrs]
 path = "../../../elrond-sdk-erdrs"

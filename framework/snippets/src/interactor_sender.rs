@@ -1,6 +1,6 @@
-use elrond_sdk_erdrs::{data::transaction::Transaction, interactors::wallet::Wallet};
 use log::debug;
-use mx_sc_debug::mx_sc::types::Address;
+use multiversx_sc_scenario::multiversx_sc::types::Address;
+use multiversx_sdk::{data::transaction::Transaction, wallet::Wallet};
 
 use crate::{address_h256_to_erdrs, Interactor};
 

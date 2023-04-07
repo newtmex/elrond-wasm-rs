@@ -1,8 +1,86 @@
 # Change Log
 
-There are several crates in this repo, this changelog will keep track of all of them.
+This file contains a centralizes a trace of all published crate versions, with their changes in short.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## Versioning the crates
+
+The `mx-sdk-rs` repo contains many crates, grouped into several families. Crates in these families always have the same version with one another.
+
+For brevity, the changelog will only mention a short version of their name.
+
+They are:
+- `multiversx-sc`, in short `sc`, the smart contract framework, 6 crates + 3 for contracts/modules:
+	- `multiversx-sc`
+    - `multiversx-sc-derive`
+    - `multiversx-sc-meta`
+    - `multiversx-sc-scenario`
+    - `multiversx-sc-snippets`
+    - `multiversx-sc-wasm-adapter`
+    - `multiversx-sc-modules` - *standard contract modules*
+	- `multiversx-price-aggregator-sc` - *core contract*
+	- `multiversx-wegld-swap-sc` - *core contract*
+- `multiversx-sc-codec`, in short `codec`, the serializer/deserializer, 2 crates:
+	- `multiversx-sc-codec`
+	- `multiversx-sc-codec-derive`
+- `multiversx-chain-vm`, in short `vm`, a Rust VM implementation, 1 crate.
+- `multiversx-chain-scenario-format`, in short `scenario-format`, scenario JSON serializer/deserializer, 1 crate.
+- `multiversx-sdk`, in short `sdk`, allows communication with the chain(s), 1 crate.
+
+## [sc 0.39.8, vm 0.1.8] - 2023-03-29
+- `multiversx-sc-meta` `test-gen` command: generates Rust integration tests based on scenarios present in the `scenarios` folder.
+ - `UnorderedSetMapper` `swap_indexes` method.
+
+## [sc 0.39.7, vm 0.1.7] - 2023-03-18
+ - `TokenIdentifier` `ticker` method.
+ - `ManagedBuffer` `concat` method.
+
+## [sc 0.39.6, vm 0.1.6] - 2023-03-16
+- `multiversx-sc-meta` improvements:
+	- Bugfix: custom names in the main contract no longer crash the multi-contract build.
+	- Bugfix: the `--mir` flag works correctly in `sc-meta all build`;
+	- Multi-contract configs can now specify separate cargo features for individual contracts, for conditional compilation.
+
+## [sc 0.39.5, vm 0.1.5] - 2023-02-06
+- `multiversx-sc-meta` improvements:
+	- Rust snippet generator fixes. The generator creates compilable code with appropriate argument types.
+	- `local-deps` command: generates a report on the local depedencies of contract crates. Will explore indirect depdencies too.
+	- Upgrade tool minor fix.
+
+## [sc 0.39.4, vm 0.1.4] - 2023-01-26
+- `multiversx-sc-meta` improvements:
+	- `--locked` flag get passed to the build command, preserves dependencies in Cargo.lock.
+	- `update` command updates Cargo.lock files without building the contracts.
+- Backwards compatibility for running scenarios using the VM Go infrastructure.
+
+## [sc 0.39.3, vm 0.1.3] - 2023-01-26
+- `multiversx-sc-meta` improvements:
+	- `upgrade` can handle crates as early as `0.28.0`;
+	- `--ignore` flag for the `all` command: will ignore folders with given names, by default set to `target`;
+	- `info` command, shows contracts and contract library crates with their respective framework versions;
+	- `--mir` flag when building, also emits MIR files;
+	- printing to console the build command.
+- `BigUint` from `u128` conversion.
+
+## [sc 0.39.2, vm 0.1.2] - 2023-01-19
+- `multiversx-sc-meta` improvements:
+	- `all` command that allows calling all contract meta crates in a folder;
+	- `upgrade` also re-generates wasm crates after reaching 0.39.1.
+- Cleaned up dependencies.
+
+## [sc 0.39.1, codec 0.17.1, vm 0.1.1, scenario-format 0.19.1, sdk 0.1.1] - 2023-01-18
+- `multiversx-sc-meta` can be installed as a standalone tool (`sc-meta`), and used to automatically upgrade contracts.
+- Many depedencies updates across the repo.
+- Updated readme files.
+
+## [sc 0.39.0, codec 0.17.0, vm 0.1.0, scenario-format 0.19.0, sdk 0.1.0] - 2023-01-12
+- All crates were renamed, in line with the MultiversX brand.
+- New crate: `multiversx-chain-vm`, extracted from the old debug crate.
+- New crate: `multiversx-sdk`, adapted from a solution proposed by the community.
+- A `ScenarioWorld` facade, for contract tests.
+- The meta crate supports `twiggy` post-processing, this is a tool to analyze contract size and investigate bloat in the binaries.
+- Dropped crate: `elrond-wasm-output`. There is no equivalent crate, its job was passed to the individual `wasm` crates.
+- `ManagedVec` supports sorting and deduplication.
+- `migrateUserName` builtin function mock.
 
 ## [elrond-wasm 0.38.0, elrond-codec 0.16.0, mandos 0.18.0] - 2022-12-15
 - `ContractCall` refactor. Building a contract call comes with harder compile-time constraints. This also reduces compiled code size.

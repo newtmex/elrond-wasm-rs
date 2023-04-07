@@ -13,8 +13,8 @@
             "gitVersion": "<git version here>"
         },
         "framework": {
-            "name": "mx-sc",
-            "version": "0.38.0"
+            "name": "multiversx-sc",
+            "version": "0.39.8"
         }
     },
     "docs": [

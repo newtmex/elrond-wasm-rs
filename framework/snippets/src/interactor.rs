@@ -1,15 +1,15 @@
-use elrond_sdk_erdrs::{
-    blockchain::rpc::ElrondProxy,
+use multiversx_sc_scenario::{multiversx_sc::types::Address, scenario_model::AddressValue};
+use multiversx_sdk::{
+    blockchain::CommunicationProxy,
     data::{address::Address as ErdrsAddress, network_config::NetworkConfig},
-    interactors::wallet::Wallet,
+    wallet::Wallet,
 };
-use mx_sc_debug::{mandos_system::model::AddressValue, mx_sc::types::Address, HashMap};
-use std::time::Duration;
+use std::{collections::HashMap, time::Duration};
 
 use crate::Sender;
 
 pub struct Interactor {
-    pub proxy: ElrondProxy,
+    pub proxy: CommunicationProxy,
     pub network_config: NetworkConfig,
     pub sender_map: HashMap<Address, Sender>,
 
@@ -18,7 +18,7 @@ pub struct Interactor {
 
 impl Interactor {
     pub async fn new(gateway_url: &str) -> Self {
-        let proxy = ElrondProxy::new(gateway_url.to_string());
+        let proxy = CommunicationProxy::new(gateway_url.to_string());
         let network_config = proxy.get_network_config().await.unwrap();
         Self {
             proxy,

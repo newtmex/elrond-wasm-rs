@@ -1,20 +1,20 @@
 [package]
 name = "format-tests"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
-
+publish = false
 
 [[bin]]
 name = "format-tests"
 path = "src/format_tests.rs"
 
-[dependencies.mx-sc]
-version = "0.38.0"
+[dependencies.multiversx-sc]
+version = "0.39.8"
 path = "../../../framework/base"
 
-[dependencies.mx-sc-debug]
-version = "0.38.0"
-path = "../../../framework/debug"
+[dependencies.multiversx-chain-vm]
+version = "0.1.8"
+path = "../../../vm"
 
 [dev-dependencies]
 glob = "0.3.0"

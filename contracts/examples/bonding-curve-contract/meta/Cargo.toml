@@ -1,13 +1,13 @@
 [package]
 name = "bonding-curve-contract-meta"
 version = "0.0.0"
-authors = ["Alin Cruceat <alin.cruceat@elrond.com>"]
+authors = ["Alin Cruceat <alin.cruceat@multiversx.com>"]
 edition = "2021"
 publish = false
 
 [dependencies.bonding-curve-contract]
 path = ".."
 
-[dependencies.mx-sc-meta]
-version = "0.38.0"
+[dependencies.multiversx-sc-meta]
+version = "0.39.8"
 path = "../../../../framework/meta"

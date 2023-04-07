@@ -1,7 +1,7 @@
 [package]
 name = "esdt-transfer-with-fee-wasm"
 version = "0.0.0"
-authors = ["Alin Cruceat <alin.cruceat@elrond.com>"]
+authors = ["Alin Cruceat <alin.cruceat@multiversx.com>"]
 edition = "2021"
 publish = false
 
@@ -18,8 +18,8 @@ panic = "abort"
 [dependencies.esdt-transfer-with-fee]
 path = ".."
 
-[dependencies.mx-sc-wasm-adapter]
-version = "0.38.0"
+[dependencies.multiversx-sc-wasm-adapter]
+version = "0.39.8"
 path = "../../../../framework/wasm-adapter"
 
 [workspace]

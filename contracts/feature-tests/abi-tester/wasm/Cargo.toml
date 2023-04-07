@@ -1,7 +1,7 @@
 [package]
 name = "abi-tester-wasm"
 version = "0.0.0"
-authors = ["Andrei Marinica <andrei.marinica@elrond.com>"]
+authors = ["Andrei Marinica <andrei.marinica@multiversx.com>"]
 edition = "2021"
 publish = false
 
@@ -18,8 +18,8 @@ panic = "abort"
 [dependencies.abi-tester]
 path = ".."
 
-[dependencies.mx-sc-wasm-adapter]
-version = "0.38.0"
+[dependencies.multiversx-sc-wasm-adapter]
+version = "0.39.8"
 path = "../../../../framework/wasm-adapter"
 
 [workspace]

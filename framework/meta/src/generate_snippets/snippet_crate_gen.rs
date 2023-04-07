@@ -3,6 +3,8 @@ use std::{
     io::Write,
 };
 
+static SNIPPETS_SOURCE_FILE_NAME: &str = "interact.rs";
+
 pub(crate) fn create_snippets_folder(snippets_folder_path: &str) {
     // returns error if folder already exists, so we ignore the result
     let _ = fs::create_dir(snippets_folder_path);
@@ -61,13 +63,22 @@ publish = false
 
 [[bin]]
 name = "rust-interact"
-path = "src/lib.rs"
+path = "src/{SNIPPETS_SOURCE_FILE_NAME}"
 
 [dependencies.{contract_crate_name}]
 path = ".."
 
-[dependencies.elrond-snippets]
-version = "0.1.0"
+[dependencies.multiversx-sc-snippets]
+version = "0.39.2"
+
+[dependencies.multiversx-sc-scenario]
+version = "0.39.2"
+
+[dependencies.multiversx-chain-vm]
+version = "0.1.2"
+
+[dependencies.multiversx-sdk]
+version = "0.1.1"
 
 [workspace]
 
@@ -84,7 +95,7 @@ pub(crate) fn create_src_folder(snippets_folder_path: &str) {
 
 #[must_use]
 pub(crate) fn create_and_get_lib_file(snippets_folder_path: &str, overwrite: bool) -> File {
-    let lib_path = format!("{snippets_folder_path}/src/lib.rs");
+    let lib_path = format!("{snippets_folder_path}/src/{SNIPPETS_SOURCE_FILE_NAME}");
     if overwrite {
         File::create(&lib_path).unwrap()
     } else {

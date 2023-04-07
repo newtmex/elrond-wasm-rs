@@ -1,6 +1,6 @@
-mx_sc::imports!();
+multiversx_sc::imports!();
 
-#[mx_sc::module]
+#[multiversx_sc::module]
 pub trait BigIntMethods {
     #[endpoint]
     fn sqrt_big_uint(&self, a: BigUint) -> BigUint {
@@ -66,6 +66,11 @@ pub trait BigIntMethods {
     #[endpoint]
     fn big_uint_from_u64_2(&self, small: u64) -> BigUint {
         small.into()
+    }
+
+    #[endpoint]
+    fn biguint_from_u128(&self) -> BigUint {
+        BigUint::from(u128::MAX)
     }
 
     #[endpoint]

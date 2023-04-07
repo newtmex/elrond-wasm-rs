@@ -1,22 +1,22 @@
 [package]
 name = "bonding-curve-contract"
 version = "0.0.0"
-authors = ["Alin Cruceat <alin.cruceat@elrond.com>"]
+authors = ["Alin Cruceat <alin.cruceat@multiversx.com>"]
 edition = "2021"
 publish = false
 
 [lib]
 path = "src/bonding_curve_contract.rs"
 
-[dependencies.mx-sc]
-version = "0.38.0"
+[dependencies.multiversx-sc]
+version = "0.39.8"
 path = "../../../framework/base"
 
-[dependencies.mx-sc-modules]
-version = "0.38.0"
+[dependencies.multiversx-sc-modules]
+version = "0.39.8"
 path = "../../../contracts/modules"
 
-[dev-dependencies.mx-sc-debug]
-version = "0.38.0"
-path = "../../../framework/debug"
+[dev-dependencies.multiversx-sc-scenario]
+version = "0.39.8"
+path = "../../../framework/scenario"
 

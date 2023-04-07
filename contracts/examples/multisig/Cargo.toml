@@ -1,24 +1,24 @@
 [package]
 name = "multisig"
 version = "1.0.0"
-authors = ["Andrei Marinica <andrei.marinica@elrond.com>"]
+authors = ["Andrei Marinica <andrei.marinica@multiversx.com>"]
 edition = "2021"
 publish = false
 
 [lib]
 path = "src/multisig.rs"
 
-[dependencies.mx-sc]
-version = "0.38.0"
+[dependencies.multiversx-sc]
+version = "0.39.8"
 path = "../../../framework/base"
 
-[dependencies.mx-sc-modules]
-version = "0.38.0"
+[dependencies.multiversx-sc-modules]
+version = "0.39.8"
 path = "../../../contracts/modules"
 
-[dev-dependencies.mx-sc-debug]
-version = "0.38.0"
-path = "../../../framework/debug"
+[dev-dependencies.multiversx-sc-scenario]
+version = "0.39.8"
+path = "../../../framework/scenario"
 
 [dev-dependencies.adder]
 path = "../adder"

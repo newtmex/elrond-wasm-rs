@@ -1,14 +1,14 @@
-mx_sc::imports!();
-mx_sc::derive_imports!();
+multiversx_sc::imports!();
+multiversx_sc::derive_imports!();
 
 use super::storage;
 
 // used as mock attributes for NFTs
-#[derive(TopEncode, TopDecode, TypeAbi)]
+#[derive(TopEncode, TopDecode, TypeAbi, Clone, Copy, PartialEq, Debug)]
 pub struct Color {
-    r: u8,
-    g: u8,
-    b: u8,
+    pub r: u8,
+    pub g: u8,
+    pub b: u8,
 }
 
 #[derive(TopEncode, TopDecode, TypeAbi, PartialEq, Eq, Clone)]
@@ -20,7 +20,7 @@ pub struct ComplexAttributes<M: ManagedTypeApi> {
     pub boxed_bytes: ManagedBuffer<M>,
 }
 
-#[mx_sc::module]
+#[multiversx_sc::module]
 pub trait ForwarderNftModule: storage::ForwarderStorageModule {
     #[view]
     fn get_nft_balance(&self, token_identifier: &TokenIdentifier, nonce: u64) -> BigUint {

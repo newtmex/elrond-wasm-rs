@@ -1,17 +1,17 @@
 [package]
-name = "mx-sc-wasm-adapter"
-version = "0.38.0"
+name = "multiversx-sc-wasm-adapter"
+version = "0.39.8"
 edition = "2021"
 
 authors = [
-    "Andrei Marinica <andrei.marinica@elrond.com>",
+    "Andrei Marinica <andrei.marinica@multiversx.com>",
     "MultiversX <contact@multiversx.com>",
 ]
 license = "GPL-3.0-only"
 readme = "README.md"
-repository = "https://github.com/ElrondNetwork/elrond-wasm-rs"
+repository = "https://github.com/multiversx/mx-sdk-rs"
 homepage = "https://multiversx.com/"
-documentation = "https://docs.elrond.com/"
+documentation = "https://docs.multiversx.com/"
 description = "MultiversX WebAssembly VM API wrapper"
 keywords = ["multiversx", "wasm", "webassembly", "blockchain", "contract"]
 categories = [
@@ -29,6 +29,6 @@ ei-unmanaged-node = []
 [dependencies]
 wee_alloc = "0.4" 
 
-[dependencies.mx-sc]
-version = "=0.38.0"
+[dependencies.multiversx-sc]
+version = "=0.39.8"
 path = "../base"

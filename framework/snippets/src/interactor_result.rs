@@ -1,15 +1,15 @@
 use std::marker::PhantomData;
 
-use elrond_sdk_erdrs::data::transaction::{
-    ApiLogs, ApiSmartContractResult, Events, TransactionOnNetwork,
-};
 use log::info;
-use mx_sc_debug::{
+use multiversx_sc_scenario::{
     bech32,
-    mx_sc::{
+    multiversx_sc::{
         codec::{PanicErrorHandler, TopDecodeMulti},
         types::Address,
     },
+};
+use multiversx_sdk::data::transaction::{
+    ApiLogs, ApiSmartContractResult, Events, TransactionOnNetwork,
 };
 
 const LOG_IDENTIFIER_SC_DEPLOY: &str = "SCDeploy";

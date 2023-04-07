@@ -7,6 +7,6 @@ publish = false
 [dependencies.kitty-genetic-alg]
 path = ".."
 
-[dependencies.mx-sc-meta]
-version = "0.38.0"
+[dependencies.multiversx-sc-meta]
+version = "0.39.8"
 path = "../../../../../framework/meta"

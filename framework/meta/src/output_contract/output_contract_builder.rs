@@ -1,4 +1,4 @@
-use mx_sc::abi::{ContractAbi, EndpointAbi};
+use multiversx_sc::abi::{ContractAbi, EndpointAbi};
 use std::{
     collections::{BTreeSet, HashMap, HashSet},
     fs,
@@ -38,8 +38,9 @@ impl OutputContractBuilder {
         let external_view = cms.external_view.unwrap_or_default();
         let mut constructors = Vec::new();
         if external_view {
-            constructors
-                .push(mx_sc::external_view_contract::external_view_contract_constructor_abi())
+            constructors.push(
+                multiversx_sc::external_view_contract::external_view_contract_constructor_abi(),
+            )
         }
         (
             contract_id.clone(),
@@ -53,6 +54,7 @@ impl OutputContractBuilder {
                 settings: OutputContractSettings {
                     external_view: cms.external_view.unwrap_or_default(),
                     panic_message: cms.panic_message.unwrap_or_default(),
+                    features: cms.features.clone(),
                 },
                 ..Default::default()
             },
@@ -182,13 +184,19 @@ fn build_contract_abi(builder: OutputContractBuilder, original_abi: &ContractAbi
     }
 }
 
+fn default_wasm_crate_name(contract_name: &str) -> String {
+    format!("{contract_name}-wasm")
+}
+
 fn build_contract(builder: OutputContractBuilder, original_abi: &ContractAbi) -> OutputContract {
-    let name = builder.wasm_name().clone();
+    let contract_name = builder.wasm_name().clone();
+    let wasm_crate_name = default_wasm_crate_name(&contract_name);
     OutputContract {
         main: false,
         settings: builder.settings.clone(),
         contract_id: builder.contract_id.clone(),
-        contract_name: name,
+        contract_name,
+        wasm_crate_name,
         abi: build_contract_abi(builder, original_abi),
     }
 }
@@ -218,6 +226,17 @@ fn set_main_contract_flag(
     }
 }
 
+fn validate_output_contracts(contracts: &[OutputContract]) {
+    for contract in contracts {
+        if contract.main {
+            assert!(
+                contract.settings.features.is_empty(),
+                "features not supported for main contract"
+            );
+        }
+    }
+}
+
 impl OutputContractConfig {
     /// Assembles an `OutputContractConfig` from a raw config object that was loaded via Serde.
     ///
@@ -237,6 +256,7 @@ impl OutputContractConfig {
             .map(|builder| build_contract(builder, original_abi))
             .collect();
         set_main_contract_flag(&mut contracts, &config.settings.main);
+        validate_output_contracts(&contracts);
         OutputContractConfig {
             default_contract_config_name: config.settings.main.clone().unwrap_or_default(),
             contracts,
@@ -248,6 +268,7 @@ impl OutputContractConfig {
     /// The default configuration contains a single main contract, with all endpoints.
     pub fn default_config(original_abi: &ContractAbi) -> Self {
         let default_contract_config_name = original_abi.build_info.contract_crate.name.to_string();
+        let wasm_crate_name = default_wasm_crate_name(&default_contract_config_name);
         OutputContractConfig {
             default_contract_config_name: default_contract_config_name.clone(),
             contracts: vec![OutputContract {
@@ -255,6 +276,7 @@ impl OutputContractConfig {
                 settings: OutputContractSettings::default(),
                 contract_id: default_contract_config_name.clone(),
                 contract_name: default_contract_config_name,
+                wasm_crate_name,
                 abi: original_abi.clone(),
             }],
         }

@@ -3,5 +3,5 @@
 /target/
 */target/
 
-# The erdpy output
-output*
+# The mxpy output
+/output*/

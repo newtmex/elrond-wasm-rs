@@ -1,9 +1,9 @@
-use mx_sc::types::{EgldOrEsdtTokenIdentifier, ManagedVec};
-use mx_sc_debug::{
+use multiversx_sc::types::{EgldOrEsdtTokenIdentifier, ManagedVec};
+use multiversx_sc_modules::staking::StakingModule;
+use multiversx_sc_scenario::{
     managed_address, managed_biguint, managed_token_id, rust_biguint,
     testing_framework::BlockchainStateWrapper,
 };
-use mx_sc_modules::staking::StakingModule;
 
 static STAKING_TOKEN_ID: &[u8] = b"STAKE-123456";
 const INITIAL_BALANCE: u64 = 2_000_000;

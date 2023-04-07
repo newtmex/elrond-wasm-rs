@@ -1,17 +1,17 @@
 use std::{fs, fs::File, io::Write};
 
-use mx_sc_debug::BlockchainMock;
-use mx_sc_meta::abi_json;
+use multiversx_sc_meta::abi_json;
+use multiversx_sc_scenario::ScenarioWorld;
 
 #[test]
 fn abi_tester_abi_generated_ok() {
-    let mut blockchain = BlockchainMock::new();
+    let mut blockchain = ScenarioWorld::new();
     blockchain.set_current_dir_from_workspace("contracts/feature-tests/abi-tester");
 
     // generate ABI
-    let multi_contract_config = mx_sc_meta::multi_contract_config::<abi_tester::AbiProvider>(
+    let multi_contract_config = multiversx_sc_meta::multi_contract_config::<abi_tester::AbiProvider>(
         blockchain
-            .current_dir
+            .current_dir()
             .join("multicontract.toml")
             .to_str()
             .unwrap(),
@@ -48,12 +48,12 @@ fn abi_tester_abi_generated_ok() {
 
 #[test]
 fn check_multi_contract_config() {
-    let mut blockchain = BlockchainMock::new();
+    let mut blockchain = ScenarioWorld::new();
     blockchain.set_current_dir_from_workspace("contracts/feature-tests/abi-tester");
 
-    let multi_contract_config = mx_sc_meta::multi_contract_config::<abi_tester::AbiProvider>(
+    let multi_contract_config = multiversx_sc_meta::multi_contract_config::<abi_tester::AbiProvider>(
         blockchain
-            .current_dir
+            .current_dir()
             .join("multicontract.toml")
             .to_str()
             .unwrap(),

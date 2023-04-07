@@ -1,7 +1,7 @@
 [package]
 name = "second-contract-wasm"
 version = "0.0.0"
-authors = ["Dorin Iancu <dorin.iancu@elrond.com>"]
+authors = ["Dorin Iancu <dorin.iancu@multiversx.com>"]
 edition = "2021"
 publish = false
 
@@ -18,8 +18,8 @@ panic = "abort"
 [dependencies.second-contract]
 path = ".."
 
-[dependencies.mx-sc-wasm-adapter]
-version = "0.38.0"
+[dependencies.multiversx-sc-wasm-adapter]
+version = "0.39.8"
 path = "../../../../../../framework/wasm-adapter"
 
 [workspace]

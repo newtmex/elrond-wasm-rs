@@ -1,7 +1,7 @@
 [package]
 name = "rewards-distribution-wasm"
 version = "0.0.0"
-authors = ["Claudiu-Marcel Bruda <claudiu.bruda@elrond.com>"]
+authors = ["Claudiu-Marcel Bruda <claudiu.bruda@multiversx.com>"]
 edition = "2021"
 publish = false
 
@@ -23,6 +23,6 @@ panic = "abort"
 [dependencies.rewards-distribution]
 path = ".."
 
-[dependencies.mx-sc-wasm-adapter]
-version = "0.38.0"
+[dependencies.multiversx-sc-wasm-adapter]
+version = "0.39.8"
 path = "../../../../framework/wasm-adapter"

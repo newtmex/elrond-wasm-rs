@@ -1,17 +1,17 @@
 [package]
 name = "esdt-transfer-with-fee"
 version = "0.0.0"
-authors = ["Alin Cruceat <alin.cruceat@elrond.com>"]
+authors = ["Alin Cruceat <alin.cruceat@multiversx.com>"]
 edition = "2021"
 publish = false
 
 [lib]
 path = "src/esdt_transfer_with_fee.rs"
 
-[dependencies.mx-sc]
-version = "0.38.0"
+[dependencies.multiversx-sc]
+version = "0.39.8"
 path = "../../../framework/base"
 
-[dev-dependencies.mx-sc-debug]
-version = "0.38.0"
-path = "../../../framework/debug"
+[dev-dependencies.multiversx-sc-scenario]
+version = "0.39.8"
+path = "../../../framework/scenario"

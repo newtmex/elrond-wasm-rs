@@ -1,4 +1,4 @@
 #[test]
 fn issue_go() {
-    mx_sc_debug::scenario_go("scenarios/esdt_system_sc.scen.json");
+    multiversx_sc_scenario::run_go("scenarios/esdt_system_sc.scen.json");
 }

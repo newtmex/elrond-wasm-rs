@@ -1,13 +1,13 @@
 [package]
 name = "nft-minter-meta"
 version = "0.0.0"
-authors = ["Dorin Iancu <dorin.iancu@elrond.com>"]
+authors = ["Dorin Iancu <dorin.iancu@multiversx.com>"]
 edition = "2021"
 publish = false
 
 [dependencies.nft-minter]
 path = ".."
 
-[dependencies.mx-sc-meta]
-version = "0.38.0"
+[dependencies.multiversx-sc-meta]
+version = "0.39.8"
 path = "../../../../framework/meta"

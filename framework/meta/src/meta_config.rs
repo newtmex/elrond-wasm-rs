@@ -1,11 +1,12 @@
 use std::fs;
 
-use mx_sc::abi::ContractAbi;
+use multiversx_sc::abi::ContractAbi;
 
-use super::{
-    meta_build_args::BuildArgs,
-    output_contract::{CargoTomlContents, OutputContractConfig},
+use crate::{
+    meta_wasm_tools::check_tools_installed, output_contract::OutputContract, CargoTomlContents,
 };
+
+use super::{cli_args::BuildArgs, output_contract::OutputContractConfig};
 
 const OUTPUT_RELATIVE_PATH: &str = "../output";
 const SNIPPETS_RELATIVE_PATH: &str = "../interact-rs";
@@ -15,7 +16,7 @@ const WASM_NO_MANAGED_EI: &str = "wasm-no-managed-ei";
 const WASM_NO_MANAGED_EI_LIB_PATH: &str = "../wasm-no-managed-ei/src/lib.rs";
 
 pub struct MetaConfig {
-    pub build_args: BuildArgs,
+    pub load_abi_git_version: bool,
     pub output_dir: String,
     pub snippets_dir: String,
     pub original_contract_abi: ContractAbi,
@@ -23,14 +24,14 @@ pub struct MetaConfig {
 }
 
 impl MetaConfig {
-    pub fn create(original_contract_abi: ContractAbi, build_args: BuildArgs) -> MetaConfig {
+    pub fn create(original_contract_abi: ContractAbi, load_abi_git_version: bool) -> MetaConfig {
         let output_contracts = OutputContractConfig::load_from_file_or_default(
             MULTI_CONTRACT_CONFIG_RELATIVE_PATH,
             &original_contract_abi,
         );
 
         MetaConfig {
-            build_args,
+            load_abi_git_version,
             output_dir: OUTPUT_RELATIVE_PATH.to_string(),
             snippets_dir: SNIPPETS_RELATIVE_PATH.to_string(),
             original_contract_abi,
@@ -56,39 +57,45 @@ impl MetaConfig {
     /// Cargo.toml files for secondary contracts are generated from the main contract Cargo.toml,
     /// by changing the package name.
     pub fn generate_cargo_toml_for_secondary_contracts(&mut self) {
-        let main_contract = self.output_contracts.main_contract();
+        let main_contract = self.output_contracts.main_contract_mut();
 
-        // using the same local structure for all contracts is enough for now
-        let mut cargo_toml_contents =
+        let main_cargo_toml_contents =
             CargoTomlContents::load_from_file(main_contract.cargo_toml_path());
+        main_contract.wasm_crate_name = main_cargo_toml_contents.package_name();
+
         for secondary_contract in self.output_contracts.secondary_contracts() {
-            cargo_toml_contents.change_package_name(secondary_contract.wasm_crate_name());
-            cargo_toml_contents.save_to_file(secondary_contract.cargo_toml_path());
+            secondary_contract_cargo_toml(secondary_contract, &main_cargo_toml_contents)
+                .save_to_file(secondary_contract.cargo_toml_path());
         }
     }
+}
 
+fn secondary_contract_cargo_toml(
+    secondary_contract: &OutputContract,
+    main_cargo_toml_contents: &CargoTomlContents,
+) -> CargoTomlContents {
+    let mut cargo_toml_contents = main_cargo_toml_contents.clone();
+    cargo_toml_contents.change_package_name(secondary_contract.wasm_crate_name.clone());
+    if !secondary_contract.settings.features.is_empty() {
+        cargo_toml_contents
+            .change_features_for_parent_crate_dep(secondary_contract.settings.features.as_slice());
+    }
+    cargo_toml_contents
+}
+
+impl MetaConfig {
     fn generate_wasm_src_lib(&self) {
         for output_contract in &self.output_contracts.contracts {
             output_contract.generate_wasm_src_lib_file();
         }
     }
 
-    pub fn build(&mut self) {
-        self.check_tools_installed();
+    pub fn build(&mut self, mut build_args: BuildArgs) {
+        check_tools_installed(&mut build_args);
 
         for output_contract in &self.output_contracts.contracts {
-            output_contract.build_contract(&self.build_args, self.output_dir.as_str());
+            output_contract.build_contract(&build_args, self.output_dir.as_str());
         }
-    }
-
-    /// Convenience functionality, to get all flags right for the debug build.
-    pub fn build_dbg(&mut self) {
-        self.build_args.wasm_name_suffix = Some("dbg".to_string());
-        self.build_args.wasm_opt = false;
-        self.build_args.debug_symbols = true;
-        self.build_args.wat = true;
-        self.build_args.extract_imports = false;
-        self.build();
     }
 
     /// Cleans the wasm crates and all other outputs.
@@ -100,6 +107,13 @@ impl MetaConfig {
     fn clean_contract_crates(&self) {
         for output_contract in &self.output_contracts.contracts {
             output_contract.cargo_clean();
+        }
+    }
+
+    /// Updates the Cargo.lock on all wasm crates.
+    pub fn update(&self) {
+        for output_contract in &self.output_contracts.contracts {
+            output_contract.cargo_update();
         }
     }
 

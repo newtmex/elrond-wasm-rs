@@ -1,24 +1,24 @@
 [package]
 name = "rust-testing-framework-tester"
 version = "0.0.0"
-authors = ["Dorin Iancu <dorin.iancu@elrond.com>"]
+authors = ["Dorin Iancu <dorin.iancu@multiversx.com>"]
 edition = "2021"
 publish = false
 
-[dependencies.mx-sc]
-version = "0.38.0"
+[dependencies.multiversx-sc]
+version = "0.39.8"
 path = "../../../framework/base"
 features = [ "alloc" ]
 
-[dependencies.adder]
+[dev-dependencies.adder]
 path = "../../examples/adder"
 
-[dependencies.basic-features]
+[dev-dependencies.basic-features]
 path = "../../feature-tests/basic-features"
 
-[dev-dependencies.mx-sc-debug]
-version = "0.38.0"
-path = "../../../framework/debug"
+[dev-dependencies.multiversx-sc-scenario]
+version = "0.39.8"
+path = "../../../framework/scenario"
 
 [dev-dependencies]
 num-bigint = "0.4.2"

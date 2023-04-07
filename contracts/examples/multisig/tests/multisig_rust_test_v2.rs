@@ -5,20 +5,20 @@ use multisig::{
     multisig_perform::ProxyTrait as _, multisig_propose::ProxyTrait as _, ProxyTrait as _,
 };
 
-use mx_sc::{
+use multiversx_sc::{
     codec::multi_types::{MultiValueVec, OptionalValue},
     storage::mappers::SingleValue,
     types::{Address, CodeMetadata},
 };
-use mx_sc_debug::{
-    mandos_system::model::*,
+use multiversx_sc_scenario::{
     scenario_format::interpret_trait::{InterpretableFrom, InterpreterContext},
-    BlockchainMock, ContractInfo, DebugApi,
+    scenario_model::*,
+    ContractInfo, DebugApi, ScenarioWorld,
 };
 use num_bigint::BigUint;
 
-fn world() -> BlockchainMock {
-    let mut blockchain = BlockchainMock::new();
+fn world() -> ScenarioWorld {
+    let mut blockchain = ScenarioWorld::new();
     blockchain.set_current_dir_from_workspace("contracts/examples/multisig");
 
     blockchain.register_contract("file:test-contracts/adder.wasm", adder::ContractBuilder);
@@ -80,7 +80,7 @@ type MultisigContract = ContractInfo<multisig::Proxy<DebugApi>>;
 type AdderContract = ContractInfo<adder::Proxy<DebugApi>>;
 
 struct MultisigTestState {
-    world: BlockchainMock,
+    world: ScenarioWorld,
     owner: AddressValue,
     alice: AddressValue,
     bob: AddressValue,
@@ -106,7 +106,7 @@ impl MultisigTestState {
             adder_multisig: AdderContract::new("sc:adder-multisig"),
         };
 
-        state.world.mandos_set_state(
+        state.world.set_state_step(
             SetStateStep::new()
                 .put_account(&state.owner, Account::new().nonce(1))
                 .put_account(&state.alice, Account::new().nonce(1))
@@ -118,7 +118,7 @@ impl MultisigTestState {
     }
 
     fn multisig_deploy(&mut self) -> &mut Self {
-        self.world.mandos_set_state(
+        self.world.set_state_step(
             SetStateStep::new()
                 .put_account(&self.owner, Account::new().nonce(1))
                 .new_address(&self.owner, 1, &self.multisig),
@@ -147,7 +147,7 @@ impl MultisigTestState {
 
     fn adder_deploy(&mut self) -> &mut Self {
         let ic = &self.world.interpreter_context();
-        self.world.mandos_set_state(
+        self.world.set_state_step(
             SetStateStep::new()
                 .put_account(&self.owner, Account::new().nonce(1))
                 .new_address(&self.owner, 1, &self.adder),
@@ -212,8 +212,8 @@ impl MultisigTestState {
     }
 
     fn multisig_propose_adder_deploy(&mut self, caller: &Address) -> usize {
-        self.world.mandos_set_state(SetStateStep::new().new_address(
-            &self.multisig.mandos_address_expr,
+        self.world.set_state_step(SetStateStep::new().new_address(
+            &self.multisig.scenario_address_expr,
             0,
             &self.adder_multisig,
         ));
