@@ -26,7 +26,7 @@ pub fn default_execution(tx_input: TxInput, tx_cache: TxCache) -> (TxResult, Blo
         && !tx_context.tx_input_box.egld_value.is_zero();
     let transfer_value_log = if add_transfer_log {
         Some(TxLog {
-            address: Address::zero(), // TODO: figure out the real VM behavior
+            address: tx_context.tx_input_box.from.clone(), // Address::zero(), // TODO: figure out the real VM behavior
             endpoint: "transferValueOnly".into(),
             topics: vec![
                 tx_context.tx_input_box.from.to_vec(),

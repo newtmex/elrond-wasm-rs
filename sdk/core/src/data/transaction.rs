@@ -62,6 +62,8 @@ pub struct TransactionOnNetwork {
     pub sender: Address,
     pub gas_price: u64,
     pub gas_limit: u64,
+    #[serde(default)]
+    pub gas_used: u64,
     pub signature: String,
     pub source_shard: u32,
     pub destination_shard: u32,
@@ -109,6 +111,7 @@ pub struct ApiSmartContractResult {
     pub value: u64,
     pub receiver: Address,
     pub sender: Address,
+    #[serde(default)]
     pub data: String,
     pub prev_tx_hash: String,
     pub original_tx_hash: String,

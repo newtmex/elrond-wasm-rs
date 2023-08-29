@@ -343,10 +343,13 @@ where
 impl<M, T> ManagedVec<M, T>
 where
     M: ManagedTypeApi,
-    T: ManagedVecItem + Ord + Debug,
+    T: ManagedVecItem + Debug, // We can sort by if item does not implement `Ord`
     [(); T::PAYLOAD_SIZE]:,
 {
-    pub fn sort(&mut self) {
+    pub fn sort(&mut self)
+    where
+        T: Ord,
+    {
         self.with_self_as_slice_mut(|slice| {
             slice.sort();
             slice
@@ -387,6 +390,7 @@ where
 
     pub fn sort_unstable(&mut self)
     where
+        T: Ord,
         [(); T::PAYLOAD_SIZE]:,
     {
         self.with_self_as_slice_mut(|slice| {
@@ -418,7 +422,10 @@ where
         })
     }
 
-    pub fn is_sorted(&self) -> bool {
+    pub fn is_sorted(&self) -> bool
+    where
+        T: Ord,
+    {
         self.with_self_as_slice(|slice| slice.is_sorted())
     }
 
@@ -439,6 +446,15 @@ where
         self.with_self_as_slice(|slice| slice.is_sorted_by_key(|a| f(&a.decode())))
     }
 }
+
+// impl <M,T> ManagedVec<M,T>
+// where
+// M: ManagedTypeApi,
+// T:ManagedVecItem+Debug,
+// [();T::PAYLOAD_SIZE]:,
+// {
+//     pub fn sort_through<F>()
+// }
 
 impl<M, T> ManagedVec<M, T>
 where

@@ -78,6 +78,13 @@ impl BlockchainStateWrapper {
         }
     }
 
+    pub fn new_sc_address(&mut self) -> Address {
+        let address = self.address_factory.new_sc_address();
+        self.create_account_raw(&address, &0u64.into(), None, None, None);
+
+        address
+    }
+
     pub fn get_mut_state(&mut self) -> &mut Rc<BlockchainMock> {
         &mut self.rc_b_mock
     }
@@ -924,7 +931,7 @@ fn build_tx_input(
     }
 }
 
-fn address_to_hex(address: &Address) -> String {
+pub fn address_to_hex(address: &Address) -> String {
     hex::encode(address.as_bytes())
 }
 

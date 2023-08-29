@@ -43,6 +43,13 @@ pub trait CryptoFeatures {
         message: ManagedBuffer,
         signature: ManagedBuffer,
     ) -> bool {
+        // sc_panic!(
+        //     "key: {}, message: {}, signature: {}",
+        //     key,
+        //     message,
+        //     signature
+        // );
+
         self.crypto().verify_bls(&key, &message, &signature)
     }
 

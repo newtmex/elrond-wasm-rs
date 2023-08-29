@@ -27,6 +27,7 @@ pub struct NetworkConfig {
     pub num_shards_without_meta: u32,
     #[serde(rename = "erd_round_duration")]
     pub round_duration: i64,
+    pub erd_rounds_per_epoch: u64,
     #[serde(rename = "erd_shard_consensus_group_size")]
     pub shard_consensus_group_size: u64,
     #[serde(rename = "erd_start_time")]

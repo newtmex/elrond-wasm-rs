@@ -7,7 +7,7 @@ use crate::data::{
     hyperblock::{HyperBlock, HyperBlockResponse},
     network_config::{NetworkConfig, NetworkConfigResponse},
     network_economics::{NetworkEconomics, NetworkEconomicsResponse},
-    network_status::NetworkStatusResponse,
+    network_status::{NetworkStatusResponse, NetworkStatus},
     transaction::{
         ArgCreateTransaction, ResponseTxCost, SendTransactionResponse, SendTransactionsResponse,
         Transaction, TransactionInfo, TransactionOnNetwork, TransactionStatus, TxCostResponseData,
@@ -348,6 +348,30 @@ impl CommunicationProxy {
         match resp.data {
             None => Err(anyhow!("{}", resp.error)),
             Some(b) => Ok(b),
+        }
+    }
+
+    // get_latest_network_status retrieves the latest network status (metachain) from the network
+    pub async fn get_latest_network_status(&self, with_metachain: bool) -> Result<NetworkStatus> {
+        let mut endpoint = GET_NETWORK_STATUS_ENDPOINT.to_string();
+
+        if with_metachain {
+            endpoint = format!("{}/{}", GET_NETWORK_STATUS_ENDPOINT, METACHAIN_SHARD_ID);
+        }
+
+        let endpoint = self.get_endpoint(endpoint.as_str());
+
+        let resp = self
+            .client
+            .get(endpoint)
+            .send()
+            .await?
+            .json::<NetworkStatusResponse>()
+            .await?;
+
+        match resp.data {
+            None => Err(anyhow!("{}", resp.error)),
+            Some(b) => Ok(b.status),
         }
     }
 }

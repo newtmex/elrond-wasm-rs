@@ -25,9 +25,9 @@
                 "to": "sc:basic-features",
                 "function": "verify_bls_signature",
                 "arguments": [
-                    "0xb5823f6e564251cc03ce7bad3da83e72576e92795d3500bba1acb30ec9a94dce87bb8aa794d67b2d61d15c33f28f6c0c23ba1dfcbf21e8f8b46286ff871afabac925303ddcaddce6254fcff6d3155797db40b3d3b5865e8fc0bd770b3d79b381",
-                    "0x6d65737361676520746f206265207369676e6564",
-                    "0xaf32a2ddf341c08d1eb7232f05dc34e4454155e676b58c40fddf9a036562ac2c01533d2d557cb49d73aa9d7a89744696"
+                    "0xb408d65684d45a9cea1fb34bc21a703753e84dfae54a159cb5ad421f1297229dc102efb7051eb47dedbcf7014f3b8815bbd2f87714b2b3278a1d766011ec359f05a96db8a0056019e16e85c0c84f136acd861161862c57aac977da189dd15a8f",
+                    "str:0000000000000000000100000000000000000000000000000000000002ffffff",
+                    "str:f223ea462fe50985b4ba21bafdcfc64af8a57483aed4519a1cc88648987e99459caa49fae540ccd373c7525b382cd299"
                 ],
                 "gasLimit": "50,000,000",
                 "gasPrice": "0"

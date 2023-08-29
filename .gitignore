@@ -21,6 +21,7 @@ tutorial/book
 my-vm-tests.sh
 quick.sh
 twiggy*
+.DS_Store
 
 # Zip output with example wasm binaries
 examples-wasm.zip
